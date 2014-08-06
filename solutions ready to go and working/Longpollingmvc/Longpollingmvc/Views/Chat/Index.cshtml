@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@section scripts
+{
+<script type="text/javascript">
+    
+    $(function() {
+        
+        // add click event to post the message to the server
+
+        $(".btn-submit").click(function () {
+
+            //send chat message to server
+            $.ajax({
+                type: "POST",
+                url: "/chat/PostMessage",
+                data: { message: $("#txtMessage").val() }
+            });
+
+            //reset textbox
+            $("#txtMessage").val("");
+
+        });
+
+      
+        
+        // immediate fn to kick off the inital poll
+        (function longPoll() {
+
+            $.ajax({
+                type: "GET",
+                url: "chat/LongPoll",
+                cache: false,    // defeat the 304 status that plaques IE
+                success: function (message) {
+                    //when response is recieved, update list and call this function again
+                    $("<li>").text(message).appendTo("#messages");
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("error: " + errorThrown);
+                },
+                complete: longPoll
+            });
+
+        })();  // immediately evaluated function		 
+
+
+
+    });
+    
+
+</script>
+}
+	@* html for the ui in index.cshtml*@
+
+	<h2>Chatty Chat Chat</h2>
+
+    <ul id="messages"></ul>
+
+    Say something: <input type="text" id="txtMessage" />
+    <button class="btn-submit">Submit</button>
+			   
+			   
+

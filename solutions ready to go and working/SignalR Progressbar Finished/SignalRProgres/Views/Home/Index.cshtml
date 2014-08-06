@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>SignalR Real-Time Progress Bar</h2>
+
+
+<div id="test" class="meter">
+    <span style="width: 0%"></span>
+</div>
+
+<input id="iAmTheMaster" type="button" value="I Am The Master"/>
+<input id="key" type="password" maxlength="6"/>
+<input id="0percent" type="button" value="0%"/>
+<input id="50percent" type="button" value="50%"/>
+<input id="100percent" type="button" value="100%"/>
+
+<input id="auto" type="button" value="auto"/>
+
+@section Scripts {
+    
+    <script src="~/Scripts/jquery.signalR-2.1.1.js"></script>
+    <script src="Signalr/hubs"></script>
+    <script src="~/Scripts/progress.js"></script>
+
+}
